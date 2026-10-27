@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Kataleya.Escritorio.Components.Common.IndicadorBloqMayus"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Grid
+        x:Name="Contenido"
+        ColumnDefinitions="14,*"
+        ColumnSpacing="6"
+        IsVisible="False">
+        <Path
+            Grid.Column="0"
+            WidthRequest="14"
+            HeightRequest="14"
+            Margin="0,0.5,0,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            Data="{StaticResource IconoAlertaTriangulo}"
+            Stroke="{StaticResource Advertencia}"
+            StrokeThickness="1.75"
+            Aspect="Uniform" />
+        <Label
+            x:Name="Etiqueta"
+            Grid.Column="1"
+            Text="Bloq Mayús está activado."
+            TextColor="{StaticResource AdvertenciaTexto}"
+            FontFamily="InterRegular"
+            FontSize="12"
+            LineHeight="1.25"
+            LineBreakMode="WordWrap" />
+    </Grid>
+</ContentView>

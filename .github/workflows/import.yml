@@ -1,8 +1,6 @@
 name: Import source repository
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -15,10 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Merge source repository
+      - name: Import files from source
         env:
           SOURCE_URL: https://github.com/Jhn2059/SISTEMA-DESKTOP_AGENCIA-KATALEYA-VIP.git
         run: |
@@ -26,7 +22,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote add source "$SOURCE_URL"
           git fetch --no-tags source main
-          git merge --allow-unrelated-histories --no-edit source/main
-          git rm -f .github/workflows/import.yml
-          git commit -m "Remove temporary import workflow"
+          git checkout source/main -- .
+          git rm -f --ignore-unmatch ".github/workflows/compilar-windows.yml"
+          if git diff --cached --quiet; then
+            echo "Nothing to import"
+            exit 0
+          fi
+          git commit -m "Import SISTEMA-DESKTOP_AGENCIA-KATALEYA-VIP"
           git push origin main

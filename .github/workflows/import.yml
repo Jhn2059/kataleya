@@ -1,0 +1,32 @@
+name: Import source repository
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.repository == 'Jhn2059/kataleya'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge source repository
+        env:
+          SOURCE_URL: https://github.com/Jhn2059/SISTEMA-DESKTOP_AGENCIA-KATALEYA-VIP.git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add source "$SOURCE_URL"
+          git fetch --no-tags source main
+          git merge --allow-unrelated-histories --no-edit source/main
+          git rm -f .github/workflows/import.yml
+          git commit -m "Remove temporary import workflow"
+          git push origin main
